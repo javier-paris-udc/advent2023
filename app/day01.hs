@@ -48,4 +48,4 @@ linesP = many1 alphaNum `sepEndBy1` spaces
 
 
 main :: IO ()
-main = applyInput linesP solveP2 solveP2
+main = applyInput linesP solveP1 solveP2
