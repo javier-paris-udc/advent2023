@@ -72,7 +72,7 @@ applyInputSWith parser state solveP1 solveP2 printP1 printP2 =
         parseRes <- parseFromArg parser state
         case parseRes of
             Left err ->
-                print err
+                putStrLn err
             Right parsedRes ->
                 do
                     printP1 $ solveP1 parsedRes
