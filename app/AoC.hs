@@ -1,5 +1,7 @@
 module AoC where
 
+import Data.Bifunctor     (first)
+import Data.List          (unfoldr)
 import Text.Parsec        (char
                           ,many1
                           ,digit
@@ -12,7 +14,10 @@ import Text.Parsec        (char
 import Text.Parsec.String (Parser)
 import System.Environment (getArgs, getProgName)
 import Control.Monad      (void)
-import Data.Bifunctor (first)
+
+
+groupsOf :: Int -> [a] -> [[a]]
+groupsOf n = unfoldr (\l -> if null l then Nothing else Just (splitAt n l))
 
 
 intP :: Parsec String a Int
