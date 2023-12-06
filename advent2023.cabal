@@ -83,3 +83,7 @@ executable day05
     import:           shared-properties
     build-depends:    containers >=0.6.8
     main-is:          day05.hs
+
+executable day06
+    import:           shared-properties
+    main-is:          day06.hs
