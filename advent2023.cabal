@@ -87,3 +87,7 @@ executable day05
 executable day06
     import:           shared-properties
     main-is:          day06.hs
+
+executable day07
+    import:           shared-properties
+    main-is:          day07.hs
