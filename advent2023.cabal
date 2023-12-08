@@ -91,3 +91,8 @@ executable day06
 executable day07
     import:           shared-properties
     main-is:          day07.hs
+
+executable day08
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19
+    main-is:          day08.hs
