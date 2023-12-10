@@ -100,3 +100,9 @@ executable day08
 executable day09
     import:           shared-properties
     main-is:          day09.hs
+
+executable day10
+    import:           shared-properties
+    build-depends:    array >= 0.5.5.0,
+                      unordered-containers >= 0.2.19
+    main-is:          day10.hs
