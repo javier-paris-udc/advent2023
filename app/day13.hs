@@ -1,12 +1,12 @@
 module Main where
 
 
-import AoC (applyInput)
+import AoC                (applyInput)
+import Control.Monad      (mplus)
+import Data.Function      ((&))
+import Data.List          (transpose)
+import Text.Parsec        (char, choice, many1, newline, sepEndBy1, spaces)
 import Text.Parsec.String (Parser)
-import Text.Parsec (char, choice, many1, newline, sepEndBy1, spaces)
-import Control.Monad (mplus)
-import Data.List ( transpose )
-import Data.Function ((&))
 
 
 type Pattern = [[Bool]]
