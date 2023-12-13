@@ -9,7 +9,7 @@ import qualified Data.HashMap.Strict as Map
 import Data.Function ((&))
 
 
-data Spring = W | B | U deriving (Show, Eq)
+data Spring = W | B | U deriving (Show, Eq) -- Working, Broken, Unknown
 
 possible :: [Spring] -> [Int] -> Int
 possible springs nums = aux lenSp $ Map.fromList [((Nothing, lenNs), (1, springs, nums))]
@@ -30,25 +30,25 @@ possible springs nums = aux lenSp $ Map.fromList [((Nothing, lenNs), (1, springs
     noNs (Just 0,  0) _ = True
     noNs _            _ = False
 
-    addCases (a,b,c) (d,_,_) = (a+d, b, c)
+    insert = Map.insertWith (\(a,b,c) (d,_,_) -> (a+d, b, c))
 
     mix m (cur, lenN) (cases, sp, ns) =
         case (cur, sp, ns) of
             (_, [], _)       -> error "mix: empty list"
             (Nothing, s:ss, [])
-                | s /= B    -> Map.insertWith addCases (Nothing, lenN) (cases, ss, []) m
+                | s /= B    -> insert (Nothing, lenN) (cases, ss, []) m
                 | otherwise -> m
-            (Nothing, W:ss, _) -> Map.insertWith addCases (Nothing, lenN) (cases, ss, ns) m
-            (Nothing, B:ss, n:nms) -> Map.insertWith addCases (Just (n-1), lenN-1) (cases, ss, nms) m
+            (Nothing, W:ss, _) -> insert (Nothing, lenN) (cases, ss, ns) m
+            (Nothing, B:ss, n:nms) -> insert (Just (n-1), lenN-1) (cases, ss, nms) m
             (Nothing, U:ss, n:nms) -> m
-                                    & Map.insertWith addCases (Just (n-1), lenN-1) (cases, ss, nms)
-                                    & Map.insertWith addCases (Nothing, lenN) (cases, ss, ns)
-            (Just 0, W:ss, _) -> Map.insertWith addCases (Nothing, lenN) (cases, ss, ns) m
+                                    & insert (Just (n-1), lenN-1) (cases, ss, nms)
+                                    & insert (Nothing, lenN) (cases, ss, ns)
+            (Just 0, W:ss, _) -> insert (Nothing, lenN) (cases, ss, ns) m
             (Just 0, B:_,  _) -> m
-            (Just 0, U:ss, _) -> Map.insertWith addCases (Nothing, lenN) (cases, ss, ns) m
+            (Just 0, U:ss, _) -> insert (Nothing, lenN) (cases, ss, ns) m
             (Just _, W:_,  _) -> m
-            (Just n, B:ss, _) -> Map.insertWith addCases (Just (n-1), lenN) (cases, ss, ns) m
-            (Just n, U:ss, _) -> Map.insertWith addCases (Just (n-1), lenN) (cases, ss, ns) m
+            (Just n, B:ss, _) -> insert (Just (n-1), lenN) (cases, ss, ns) m
+            (Just n, U:ss, _) -> insert (Just (n-1), lenN) (cases, ss, ns) m
 
 
 solveP2 :: [([Spring], [Int])] -> Int
