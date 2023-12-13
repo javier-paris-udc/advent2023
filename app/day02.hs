@@ -38,17 +38,14 @@ gamesP :: Parser [(Int, Game)]
 gamesP = gameP `sepEndBy1` spaces
   where
     gameP = do
-        _ <- string "Game "
-        game_id <- intP
-        _ <- string ": "
-        game <- playP `sepBy1` sepP ";"
+        game_id <- string "Game " >> intP <* string ": "
+        game    <- playP `sepBy1` sepP ";"
         pure (game_id, game)
 
     playP = diceP `sepBy1` sepP ","
 
     diceP = do
-        n <- intP
-        spaces
+        n <- intP <* spaces
         dice <- choice [string "red"   >> pure Red
                        ,string "blue"  >> pure Blue
                        ,string "green" >> pure Green]

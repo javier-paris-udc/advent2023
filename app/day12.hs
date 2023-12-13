@@ -1,12 +1,12 @@
 module Main where
 
-import AoC (applyInput, commaSepP, intP)
-import Text.Parsec (char, choice, many1, sepBy1, sepEndBy1, spaces)
-import Text.Parsec.String (Parser)
-import Data.Bifunctor (bimap)
-import Data.List (intercalate)
+import           AoC                 (applyInput, commaSepP, intP)
+import           Data.Bifunctor      (bimap)
+import           Data.Function       ((&))
 import qualified Data.HashMap.Strict as Map
-import Data.Function ((&))
+import           Data.List           (intercalate)
+import           Text.Parsec         (char, choice, many1, sepBy1, sepEndBy1, spaces)
+import           Text.Parsec.String  (Parser)
 
 
 data Spring = W | B | U deriving (Show, Eq) -- Working, Broken, Unknown
