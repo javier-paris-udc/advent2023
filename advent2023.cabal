@@ -120,3 +120,9 @@ executable day12
 executable day13
     import:           shared-properties
     main-is:          day13.hs
+
+executable day14
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19,
+                      hashable >= 1.4
+    main-is:          day14.hs
