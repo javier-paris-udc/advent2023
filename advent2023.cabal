@@ -131,3 +131,10 @@ executable day15
     import:           shared-properties
     build-depends:    unordered-containers >= 0.2.19
     main-is:          day15.hs
+
+executable day16
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19,
+                      array >= 0.5.5.0,
+                      mtl >= 2.3.1
+    main-is:          day16.hs
