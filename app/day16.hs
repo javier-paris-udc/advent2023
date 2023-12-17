@@ -1,4 +1,5 @@
 {-# LANGUAGE MultiWayIf #-}
+{-# LANGUAGE DeriveGeneric #-}
 module Main where
 
 
@@ -8,28 +9,22 @@ import           Text.Parsec.String         (Parser)
 import           Text.Parsec                (char, choice, many1, sepEndBy1, spaces)
 import qualified Data.HashSet               as Set
 import           Data.HashSet               (HashSet)
-import           Control.Monad.State.Strict (State, execState, gets, modify')
+import           Control.Monad.State.Strict (State, execState, modify', get)
 import           Data.Bifunctor             (first, second)
+import           Data.Hashable              (Hashable)
+import           GHC.Generics               (Generic)
 
 
-data Dir = U | D | L | R deriving (Show, Eq)
+data Dir = U | D | L | R deriving (Show, Eq, Generic)
 data Tile = Empty | MirrorFW | MirrorBW | SplitterV | SplitterH deriving (Show, Eq)
 type Coord = (Int, Int)
 type Board = Array Coord Tile
 type Set = HashSet
-data Energized = Energized
-    { getU :: Set Coord
-    , getD :: Set Coord
-    , getL :: Set Coord
-    , getR :: Set Coord
-    }
 
 
-dirSet :: Dir -> Energized -> Set Coord
-dirSet U = getU
-dirSet D = getD
-dirSet L = getL
-dirSet R = getR
+instance Hashable Dir
+
+type Energized = Set (Coord, Dir)
 
 
 -- forward slash reflection
@@ -57,19 +52,13 @@ move R = second (+1)
 
 explore :: Board -> Coord -> Dir -> State Energized ()
 explore board c dir = do
-    enerSet <- gets (dirSet dir)
+    set <- get
     if | not (bounds board `inRange` c) -> pure ()
-       | c `Set.member` enerSet -> pure ()
+       | (c, dir) `Set.member` set -> pure ()
        | otherwise -> do
-            changeEnerg dir (Set.insert c enerSet)
+            modify' (Set.insert (c, dir))
             mapM_ (\newD -> explore board (move newD c) newD) newDirs
   where
-    changeEnerg d s = case d of
-        U -> modify' (\ e -> e { getU = s })
-        D -> modify' (\ e -> e { getD = s })
-        L -> modify' (\ e -> e { getL = s })
-        R -> modify' (\ e -> e { getR = s })
-
     newDirs = case board ! c of
         Empty     -> [dir]
         MirrorFW  -> [fw dir]
@@ -79,11 +68,7 @@ explore board c dir = do
 
 
 energy :: Board -> Coord -> Dir -> Int
-energy board cIni dir = Set.size $ union $ execState (explore board cIni dir) initState
-  where
-    initState = Energized { getU = Set.empty, getD = Set.empty, getL = Set.empty, getR = Set.empty }
-    union energ = Set.unions [getU energ, getD energ, getL energ, getR energ]
-
+energy board cIni dir = Set.size $ Set.map fst $ execState (explore board cIni dir) Set.empty
 
 
 solveP2 :: Board -> Int

@@ -136,5 +136,6 @@ executable day16
     import:           shared-properties
     build-depends:    unordered-containers >= 0.2.19,
                       array >= 0.5.5.0,
-                      mtl >= 2.3.1
+                      mtl >= 2.3.1,
+                      hashable >= 1.4
     main-is:          day16.hs
