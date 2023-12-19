@@ -153,3 +153,8 @@ executable day18
     build-depends:    unordered-containers >= 0.2.19,
                       hashable >= 1.4
     main-is:          day18.hs
+
+executable day19
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19
+    main-is:          day19.hs
