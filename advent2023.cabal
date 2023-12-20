@@ -158,3 +158,11 @@ executable day19
     import:           shared-properties
     build-depends:    unordered-containers >= 0.2.19
     main-is:          day19.hs
+
+executable day20
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19,
+                      containers >= 0.6.8,
+                      mtl >= 2.3.1,
+                      monad-loops >= 0.4.3
+    main-is:          day20.hs
