@@ -166,3 +166,13 @@ executable day20
                       mtl >= 2.3.1,
                       monad-loops >= 0.4.3
     main-is:          day20.hs
+
+executable day21
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19
+    main-is:          day21.hs
+
+executable day22
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19
+    main-is:          day22.hs
