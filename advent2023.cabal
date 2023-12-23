@@ -176,3 +176,9 @@ executable day22
     import:           shared-properties
     build-depends:    unordered-containers >= 0.2.19
     main-is:          day22.hs
+
+executable day23
+    import:           shared-properties
+    build-depends:    array >= 0.5.5.0,
+                      containers >= 0.6.8
+    main-is:          day23.hs
