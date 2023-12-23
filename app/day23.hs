@@ -46,7 +46,7 @@ mapToGraph dirsFun m = (0, 1, Map.fromList (zip [0..] (map explore nodes)))
 
     isNode c
          = m ! c == '.'
-        && 2 < length (filter (\c2 -> inRange (bounds m) c2 && m ! c2 `elem` "<>v")
+        && 2 < length (filter (\c2 -> inRange (bounds m) c2 && m ! c2 `elem` "<>v^")
                               (($ c) <$> [north, south, west, east]))
 
     explore c = Map.fromList (concatMap (expand 1 c) (moves c c))
