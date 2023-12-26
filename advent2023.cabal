@@ -182,3 +182,13 @@ executable day23
     build-depends:    array >= 0.5.5.0,
                       containers >= 0.6.8
     main-is:          day23.hs
+
+executable day24
+    import:           shared-properties
+    main-is:          day24.hs
+
+executable day25
+    import:           shared-properties
+    build-depends:    unordered-containers >= 0.2.19,
+                      random >= 1.2.1.1
+    main-is:          day25.hs
